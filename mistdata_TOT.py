@@ -5,7 +5,7 @@ import plotly.express as px
 # Bloc d'inicialització amb la carrega del fitxer CSV i els valors inicials de les variables---------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------
 def cargar_datos():
-    df=pd.read_csv("./dat/Data_TOT_2025.csv", sep=";", encoding="ANSI")
+    df=pd.read_csv("./dat/Data_TOT_2025.csv", sep=";", encoding="UTF-8")
     df['PRODUCTO'] = df['PRODUCTO'].str.strip()
     df['ENTIDAD'] = df['ENTIDAD'].str.strip()
     st.session_state.df = df
