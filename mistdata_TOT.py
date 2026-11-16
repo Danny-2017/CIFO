@@ -5,7 +5,7 @@ import plotly.express as px
 # Bloc d'inicialització amb la carrega del fitxer CSV i els valors inicials de les variables---------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------
 def cargar_datos():
-    df=pd.read_csv("./dat/Data_TOT_2025.csv", sep=";", encoding="UTF8")
+    df=pd.read_csv("./dat/Data_TOT_2025.csv", sep=";", encoding="ANSI")
     df['PRODUCTO'] = df['PRODUCTO'].str.strip()
     df['ENTIDAD'] = df['ENTIDAD'].str.strip()
     st.session_state.df = df
@@ -17,7 +17,7 @@ if "cargado" not in st.session_state:
     st.session_state.selectl1 = "NACIONAL (G)"
     st.session_state.selectl2 = ["PROD5","PROD6","PROD7"]
     st.session_state.selectb1 = "TOT"
-    st.session_state.selectp1 = "Year"
+    st.session_state.selectp1 = "Año"
 else:    
     df=st.session_state.df
 
@@ -38,7 +38,7 @@ Prods = df['PRODUCTO'].unique()
 mesos = ['Enero', 'Febrero', 'Marzo','Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 
          'Octubre', 'Noviembre', 'Diciembre']
 mesosA = ['Enero', 'Febrero', 'Marzo','Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 
-         'Octubre', 'Noviembre', 'Diciembre', 'Year']
+         'Octubre', 'Noviembre', 'Diciembre', 'Año']
 
 
 
@@ -70,14 +70,14 @@ fig1 = px.line(
 
 # Gràfic 22222222222222222222222222222222comparativo del total anual (Barras) d'un producte concret.______________
 #_________________________________________________________________________________________________________________
-df_barres = df_ccaa[df_ccaa['PRODUCTO'] == st.session_state.selectb1].sort_values('Year', ascending=False)
+df_barres = df_ccaa[df_ccaa['PRODUCTO'] == st.session_state.selectb1].sort_values('Año', ascending=False)
 
 fig2 = px.bar(
     df_barres, 
     x='ENTIDAD', 
-    y='Year', 
+    y='Año', 
     title=f'Gràfic 2: Total Anual por Comunitat Autònoma y producte {st.session_state.selectb1}',
-    labels={'ENTIDAD': 'Comunidad Autónoma', 'Year': 'Total Anual en €'}
+    labels={'ENTIDAD': 'Comunidad Autónoma', 'Año': 'Total Anual en €'}
 )
 # Gràfic 33333333333333333333333333  pastís________________________________________________________________________
 #__________________________________________________________________________________________________________________
@@ -86,7 +86,7 @@ df_pastel = df[
     (df['PRODUCTO'].str.startswith('PROD'))
 ]
 
-# 3. Crear el gráfico de pastel usando la columna 'Year'
+# 3. Crear el gráfico de pastel usando la columna 'Año'
 fig3 = px.pie(
     df_pastel, 
     values=selectp1, 
@@ -98,7 +98,7 @@ fig3.update_traces(textposition='inside', textinfo='percent+label')
 
 # Gràfic 4444444444444444444444444444  heatmap_______________________________________________________________________
 #____________________________________________________________________________________________________________________
-#periodo = "Year"
+#periodo = "Año"
 df = df[df["PRODUCTO"].str.contains("PROD", case=False, na=False)]
 df_filtrado = df[df["ENTIDAD"].str.endswith("CCAA")].copy()
 df_filtrado["ENTIDAD"] = df_filtrado["ENTIDAD"].str.replace(" CCAA", "")
